@@ -74,14 +74,14 @@ ___
 <td align="center">
 <img width="190" height="1" alt=""><br>
 <a href="https://dbc-a0c21f80-7bb3.cloud.databricks.com/browse/folders/3169291152437955?o=7474645703081351">
-<img src="https://img.shields.io/badge/Databricks%20Repo-Cutey--Py-FF3621?logo=databricks&logoColor=white" alt="Databricks Notebook">
+<img src="https://img.shields.io/badge/Databricks%20Repo-Chonky--Py-FF3621?logo=databricks&logoColor=white" alt="Databricks Notebook">
 </a>
 </td>
 
 <td align="center">
 <img width="190" height="1" alt=""><br>
 <a href="https://leeroy.usw-16.palantirfoundry.com/shares/links/r7ukk3ybt65bk">
-<img src="https://img.shields.io/badge/Palantir%20Foundry-Repository-101113?logo=palantir&logoColor=white" alt="Palantir Repo">
+<img src="https://img.shields.io/badge/Palantir%20Foundry-Repo-101113?logo=palantir&logoColor=white" alt="Palantir Repo">
 </a>
 </td>
 </tr>
