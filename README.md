@@ -48,6 +48,7 @@ ___
 ## ☁️ Cloud
 
 <table>
+<tr>
 <td align="center">
 <img width="190" height="1" alt=""><br>
 <a href="https://chonky.nicehill-0e7bfe90.centralus.azurecontainerapps.io">
