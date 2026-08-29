@@ -42,31 +42,50 @@ sqlite-vec; and run semantic similarity search over stored chunks.
 ___
 
 
-## 🔥 Streamlit 
-
-[![Streamlit App](https://img.shields.io/badge/Streamlit-App-FF4B4B?logo=streamlit\&logoColor=white)](https://chonky-py.streamlit.app/)
 ![](https://github.com/is-leeroy-jenkins/Chonky/blob/main/resources/images/Chonky-streamlit.gif)
-- A Python framework to build dynamic, interactive web applications.
-
-## 🧊 Azure
-
-[![Containerized](https://img.shields.io/badge/Docker-App-2496ED?logo=docker&logoColor=white)](https://buddy.thankfulocean-66471d87.eastus.azurecontainerapps.io)
-
-- Container App
-
-## ☁️ Google  
-  
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/is-leeroy-jenkins/Chonky/blob/main/ipynb/pipes.ipynb)
-
-- A hosted Jupyter Notebook service that requires no setup to use and provides free access to GPUs and TPUs.
 
 
-## 🧱 Databricks
-[![Databricks Notebook](https://img.shields.io/badge/Databricks%20Repo-Chonky-FF3621?logo=databricks&logoColor=white)](https://dbc-a0c21f80-7bb3.cloud.databricks.com/editor/notebooks/1460524320197761?o=7474645703081351)
+## ☁️ Cloud
 
-- Notebook
-- Repo/Codebase
+<table>
+<td align="center">
+<img width="190" height="1" alt=""><br>
+<a href="https://chonky.nicehill-0e7bfe90.centralus.azurecontainerapps.io">
+<img src="https://img.shields.io/badge/Docker-App-2496ED?logo=docker&logoColor=white" alt="Docker App">
+</a>
+</td>
 
+
+<td align="center">
+<img width="190" height="1" alt=""><br>
+<a href="https://chonky-py.streamlit.app/">
+<img src="https://img.shields.io/badge/Streamlit-App-FF4B4B?logo=streamlit&logoColor=white" alt="Streamlit App">
+</a>
+</td>
+
+
+<td align="center">
+<img width="190" height="1" alt=""><br>
+<a href="https://drive.google.com/file/d/1gO_oHuf-gJVR8aPwUTxCtnb79Mbk7xxw/view?usp=sharing">
+<img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab">
+</a>
+</td>
+
+<td align="center">
+<img width="190" height="1" alt=""><br>
+<a href="https://dbc-a0c21f80-7bb3.cloud.databricks.com/browse/folders/3169291152437955?o=7474645703081351">
+<img src="https://img.shields.io/badge/Databricks%20Repo-Cutey--Py-FF3621?logo=databricks&logoColor=white" alt="Databricks Notebook">
+</a>
+</td>
+
+<td align="center">
+<img width="190" height="1" alt=""><br>
+<a href="https://leeroy.usw-16.palantirfoundry.com/shares/links/r7ukk3ybt65bk">
+<img src="https://img.shields.io/badge/Palantir%20Foundry-Repository-101113?logo=palantir&logoColor=white" alt="Palantir Repo">
+</a>
+</td>
+</tr>
+</table>
 
 ## 🧠 Features
 
