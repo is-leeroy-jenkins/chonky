@@ -12,7 +12,7 @@
   <a href="#-semantic-analysis">Analysis</a> ·
   <a href="#-data-tokenization">Tokens</a> ·
   <a href="#-tensor-embeddings">Embeddings</a> ·
-  <a href="#-vector-database">Vectors</a> ·
+  <a href="#%EF%B8%8F-vector-database">Vectors</a> ·
   <a href="#-similarity-search">Search</a> ·
   <a href="#-requirements">Requirements</a> ·
 
