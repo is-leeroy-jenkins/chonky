@@ -897,9 +897,7 @@ with tabs[ 0 ]:
 	documents = st.session_state[ 'documents' ]
 	raw_text = st.session_state[ 'raw_text' ]
 	
-	# ------------------------------------------------------------------
-	# LEFT COLUMN - LOADERS
-	# ------------------------------------------------------------------
+	# -------------- LEFT COLUMN - LOADERS
 	left, right = st.columns( [ 0.35, 0.65 ], gap='medium' )
 	with left:
 		_loader_msg = st.session_state.pop( '_loader_status', None )
@@ -907,7 +905,8 @@ with tabs[ 0 ]:
 			st.success( _loader_msg )
 		
 		with st.expander( label='Local Documents', expanded=True ):
-			# --------------------------- NLTK Loader Expander
+			
+			# -------------- NLTK Loader Expander
 			with st.expander( label='Corpora Loader', icon='📚', expanded=False ):
 				import nltk
 				from nltk.corpus import (brown, gutenberg, reuters, webtext, inaugural,
@@ -943,10 +942,8 @@ with tabs[ 0 ]:
 				st.markdown( '###### Local Corpus' )
 				local_corpus_dir = st.text_input( 'Local directory',
 					placeholder='path/to/text/files', key='nltk_local_dir', )
-				
-				# ------------------------------------------------------------------
-				# Load / Clear / Save controls
-				# ------------------------------------------------------------------
+				 
+				# -------------- Load / Clear / Save controls
 				col_load, col_clear, col_save = st.columns( 3 )
 				load_nltk = col_load.button( label='Load', key='nltk_load',
 					icon='📤', width='stretch' )
@@ -961,10 +958,8 @@ with tabs[ 0 ]:
 				col_save.download_button( 'Save', data=_nltk_text, file_name=_export_name,
 					mime='text/plain', disabled=not bool( _nltk_text.strip( ) ),
 					icon='💾', width='stretch' )
-				
-				# ------------------------------------------------------------------
-				# Clear
-				# ------------------------------------------------------------------
+				 
+				# -------------- Clear
 				if clear_nltk and st.session_state.get( 'documents' ):
 					st.session_state.documents = [ d for d in st.session_state.documents if
 						d.metadata.get( 'loader' ) != 'NLTKLoader' ]
@@ -974,10 +969,8 @@ with tabs[ 0 ]:
 					
 					st.session_state.active_loader = None
 					st.info( 'NLTKLoader documents removed.' )
-				
-				# ------------------------------------------------------------------
-				# Load
-				# ------------------------------------------------------------------
+				 
+				# -------------- Load
 				if load_nltk:
 					documents = [ ]
 					if file_ids:
@@ -1033,14 +1026,12 @@ with tabs[ 0 ]:
 					else:
 						st.warning( 'No documents were loaded.' )
 			
-			# --------------------------- Text Loader
+			# -------------- Text Loader
 			with st.expander( label='Text Loader', icon='📝', expanded=False ):
 				files = st.file_uploader( 'Upload Text File(s)', type=[ 'txt', 'text', 'log' ],
 					accept_multiple_files=True, key='txt_upload' )
-				
-				# ------------------------------------------------------------------
-				# Buttons: Load / Clear / Save
-				# ------------------------------------------------------------------
+				 
+				# -------------- Buttons: Load / Clear / Save
 				col_load, col_clear, col_save = st.columns( 3 )
 				load_txt = col_load.button( label='Load', key='txt_load', icon='📤', width='stretch' )
 				clear_txt = col_clear.button( label='Clear', key='txt_clear', icon='🧹', width='stretch' )
@@ -1055,18 +1046,14 @@ with tabs[ 0 ]:
 				else:
 					col_save.button( label='Save', key='txt_save_disabled', disabled=True,
 						icon='💾', width='stretch' )
-				
-				# ------------------------------------------------------------------
-				# Clear
-				# ------------------------------------------------------------------
+				 
+				# -------------- Clear
 				if clear_txt:
 					clear_if_active( 'TextLoader' )
 					st.info( 'Text Loader state cleared.' )
 					st.rerun( )
-				
-				# ------------------------------------------------------------------
-				# Load
-				# ------------------------------------------------------------------
+				 
+				# -------------- Load
 				if load_txt and files:
 					documents: list[ Document ] = [ ]
 					
@@ -1096,15 +1083,13 @@ with tabs[ 0 ]:
 					st.session_state.active_loader = 'TextLoader'
 					st.success( f'Loaded {len( documents )} text document(s).' )
 			
-			# --------------------------- CSV Loader Expander
+			# ------------ CSV Loader Expander
 			with st.expander( label='CSV Loader', icon='📑', expanded=False ):
 				csv_file = st.file_uploader( label="Upload CSV", type=[ "csv" ], key="csv_upload" )
 				delimiter = st.text_input( "Delimiter", value=",", key="csv_delim", )
 				quotechar = st.text_input( "Quote Character", value='"', key="csv_quote", )
 				
-				# --------------------------------------------------
-				# Buttons: Load / Clear / Save
-				# --------------------------------------------------
+				# -------------- Buttons: Load / Clear / Save
 				col_load, col_clear, col_save = st.columns( 3 )
 				load_csv = col_load.button( 'Load', key='csv_load', icon='📤' )
 				clear_csv = col_clear.button( 'Clear', key='csv_clear', icon='🧹' )
@@ -1119,18 +1104,14 @@ with tabs[ 0 ]:
 						icon='💾' )
 				else:
 					col_save.button( 'Save', key='csv_save_disabled', disabled=True, icon='💾' )
-				
-				# --------------------------------------------------
-				# Clear
-				# --------------------------------------------------
+				 
+				# -------------- Clear
 				if clear_csv:
 					clear_if_active( "CsvLoader" )
 					st.session_state.raw_text = rebuild_raw_text_from_documents( )
 					st.session_state[ "_loader_status" ] = "CSV Loader state cleared."
-				
-				# --------------------------------------------------
-				# Load
-				# --------------------------------------------------
+				 
+				# -------------- Load
 				if load_csv and csv_file:
 					with tempfile.TemporaryDirectory( ) as tmp:
 						path = os.path.join( tmp, csv_file.name )
@@ -1149,14 +1130,12 @@ with tabs[ 0 ]:
 					st.session_state.processed_text = None
 					st.session_state.active_loader = "CsvLoader"
 					
-					st.session_state[
-						"_loader_status" ] = f"Loaded {len( documents )} CSV document(s)."
+					st.session_state[ "_loader_status" ] = \
+						f"Loaded {len( documents )} CSV document(s)."
 			
-			# -------------------------- XML Loader Expander
+			# -------------- XML Loader Expander
 			with st.expander( label='XML Loader', icon='🧬', expanded=False ):
-				# ------------------------------------------------------------------
-				# Session-backed loader instance
-				# ------------------------------------------------------------------
+				# -------------- Session-backed loader instance
 				if 'xml_loader' not in st.session_state or st.session_state.xml_loader is None:
 					st.session_state.xml_loader = XmlLoader( )
 				
@@ -1176,10 +1155,8 @@ with tabs[ 0 ]:
 				with col2:
 					overlap_amount = st.number_input( 'Chunk Overlap', min_value=0, max_value=1000,
 						value=200, step=50 )
-				
-				# --------------------------------------------------
-				# Semantic Load
-				# --------------------------------------------------
+				 
+				# -------------- Semantic Load
 				if st.button( 'Load XML (Semantic)', use_container_width=True ):
 					if xml_file is None:
 						st.warning( 'Please select an XML file.' )
@@ -1208,10 +1185,8 @@ with tabs[ 0 ]:
 							st.session_state[ 'xml_namespaces' ] = None
 						else:
 							st.warning( 'No extractable text found in XML.' )
-				
-				# --------------------------------------------------
-				# Split Semantic Documents
-				# --------------------------------------------------
+				 
+				# -------------- Split Semantic Documents
 				if st.button( 'Split Semantic Documents', use_container_width=True ):
 					with st.spinner( 'Splitting documents...' ):
 						split_docs = loader.split( size=int( chunk_size ),
@@ -1220,10 +1195,8 @@ with tabs[ 0 ]:
 					if split_docs:
 						st.session_state[ 'xml_split_documents' ] = split_docs
 						st.success( f'Produced {len( split_docs )} document chunks.' )
-				
-				# ------------------------------------------------------------------
-				# Structured XML Tree Loading
-				# ------------------------------------------------------------------
+				 
+				# -------------- Structured XML Tree Loading
 				st.divider( )
 				st.text( 'Structured XML Tree Loading (XPath)' )
 				
@@ -1253,10 +1226,8 @@ with tabs[ 0 ]:
 							st.success( 'XML tree loaded successfully.' )
 						else:
 							st.warning( 'Failed to parse XML tree.' )
-				
-				# ------------------------------------------------------------------
-				# XPath Query Interface
-				# ------------------------------------------------------------------
+				 
+				# -------------- XPath Query Interface
 				xml_loader = st.session_state.get( 'xml_loader' )
 				
 				if xml_loader is None:
@@ -1288,10 +1259,8 @@ with tabs[ 0 ]:
 						for el in st.session_state[ 'xml_xpath_results' ][ :preview_count ]:
 							st.code( etree.tostring( el, pretty_print=True, encoding='unicode' ),
 								language='xml' )
-				
-				# ------------------------------------------------------------------
-				# Debug / Introspection
-				# ------------------------------------------------------------------
+				 
+				# -------------- Debug / Introspection
 				with st.expander( "ℹ Loader State" ):
 					xml_loader = st.session_state.get( 'xml_loader' )
 					
@@ -1306,14 +1275,12 @@ with tabs[ 0 ]:
 							"chunk_size": getattr( xml_loader, 'chunk_size', None ),
 							"overlap_amount": getattr( xml_loader, 'overlap_amount', None ), } )
 			
-			# --------------------------- Word Loader
+			# --------------- Word Loader
 			with st.expander( label='Word Document Loader', icon='📘', expanded=False ):
 				word_file = st.file_uploader( 'Upload Word Document', type=[ 'docx' ],
 					key='word_upload', )
-				
-				# --------------------------------------------------
-				# Buttons: Load / Clear / Save
-				# --------------------------------------------------
+				 
+				# -------------- Buttons: Load / Clear / Save
 				col_load, col_clear, col_save = st.columns( 3 )
 				load_word = col_load.button( 'Load', key='word_load', icon='📤' )
 				clear_word = col_clear.button( 'Clear', key='word_clear', icon='🧹' )
@@ -1328,18 +1295,14 @@ with tabs[ 0 ]:
 						icon='💾' )
 				else:
 					col_save.button( 'Save', key='word_save_disabled', disabled=True, icon='💾' )
-				
-				# --------------------------------------------------
-				# Clear
-				# --------------------------------------------------
+				 
+				# -------------- Clear
 				if clear_word:
 					clear_if_active( 'WordLoader' )
 					st.session_state.raw_text = rebuild_raw_text_from_documents( )
 					st.session_state[ '_loader_status' ] = 'Word Loader state cleared.'
-				
-				# --------------------------------------------------
-				# Load
-				# --------------------------------------------------
+				 
+				# -------------- Load
 				if load_word and word_file:
 					with tempfile.TemporaryDirectory( ) as tmp:
 						path = os.path.join( tmp, word_file.name )
@@ -1369,7 +1332,7 @@ with tabs[ 0 ]:
 					st.session_state[
 						'_loader_status' ] = f'Loaded {len( documents )} Word document(s).'
 			
-			# --------------------------- PDF Loader Expander
+			# -------------- PDF Loader Expander
 			with st.expander( label='PDF Loader', icon='📕', expanded=False ):
 				pdf = st.file_uploader( 'Upload PDF', type=[ 'pdf' ], key='pdf_upload' )
 				
@@ -1411,26 +1374,20 @@ with tabs[ 0 ]:
 				preserve_page_breaks = st.checkbox( 'Preserve Page Breaks', value=False,
 					key='pdf_preserve_page_breaks',
 					help='Adds explicit page-break markers between extracted pages.' )
-				
-				# --------------------------------------------------
-				# Buttons: Load / Clear / Save
-				# --------------------------------------------------
+				 
+				# -------------- Buttons: Load / Clear / Save
 				col_load, col_clear, col_save = st.columns( 3 )
 				load_pdf = col_load.button( 'Load', key='pdf_load', icon='📤' )
 				clear_pdf = col_clear.button( 'Clear', key='pdf_clear', icon='🧹' )
 				save_pdf = col_save.empty( )
 				
-				# --------------------------------------------------
-				# Clear
-				# --------------------------------------------------
+				# -------------- Clear
 				if clear_pdf:
 					clear_if_active( 'PdfLoader' )
 					st.session_state.pdf_pages = None
 					st.session_state[ '_loader_status' ] = 'PDF Loader state cleared.'
-				
-				# --------------------------------------------------
-				# Load
-				# --------------------------------------------------
+				 
+				# -------------- Load
 				if load_pdf and pdf:
 					with tempfile.TemporaryDirectory( ) as tmp:
 						path = os.path.join( tmp, pdf.name )
@@ -1486,10 +1443,8 @@ with tabs[ 0 ]:
 					
 					st.session_state[
 						'_loader_status' ] = f'Loaded {len( documents )} PDF document(s).'
-				
-				# --------------------------------------------------
-				# Save
-				# --------------------------------------------------
+				 
+				# -------------- Save
 				can_save = (st.session_state.get( 'active_loader' ) == 'PdfLoader' and isinstance(
 					st.session_state.get( 'raw_text' ), str ) and st.session_state.get(
 					'raw_text' ).strip( ))
@@ -1501,14 +1456,12 @@ with tabs[ 0 ]:
 				else:
 					save_pdf.button( 'Save', key='pdf_save_disabled', disabled=True, icon='💾' )
 			
-			# --------------------------- Power Point Loader
+			# --------------- Power Point Loader
 			with st.expander( label='Power Point Loader', icon='📽', expanded=False ):
 				pptx = st.file_uploader( 'Upload PPTX', type=[ 'pptx' ], key='pptx_upload', )
 				mode = st.selectbox( 'Mode', [ 'single', 'elements' ], key='pptx_mode', )
 				
-				# --------------------------------------------------
-				# Buttons: Load / Clear / Save (same row, same style)
-				# --------------------------------------------------
+				# -------------- Buttons: Load / Clear / Save (same row, same style)
 				col_load, col_clear, col_save = st.columns( 3 )
 				load_pptx = col_load.button( 'Load', key='pptx_load', icon='📤' )
 				
@@ -1550,7 +1503,7 @@ with tabs[ 0 ]:
 					st.session_state.active_loader = "PowerPointLoader"
 					st.success( f"Loaded {len( documents )} PowerPoint document(s)." )
 			
-			# --------------------------- Jupyter Notebook Loader
+			# -------------- Jupyter Notebook Loader
 			with st.expander( label='Jupyter Notebook Loader', icon='🪐', expanded=False ):
 				notebook_file = st.file_uploader( 'Upload Notebook', type=[ 'ipynb' ],
 					key='ipynb_upload', )
@@ -1566,10 +1519,8 @@ with tabs[ 0 ]:
 				
 				include_traceback = st.checkbox( 'Include Traceback', value=False,
 					key='ipynb_traceback', )
-				
-				# --------------------------------------------------
-				# Buttons: Load / Clear / Save
-				# --------------------------------------------------
+				 
+				# -------------- Buttons: Load / Clear / Save
 				col_load, col_clear, col_save = st.columns( 3 )
 				load_ipynb = col_load.button( 'Load', key='ipynb_load', icon='📤' )
 				clear_ipynb = col_clear.button( 'Clear', key='ipynb_clear', icon='🧹' )
@@ -1585,18 +1536,14 @@ with tabs[ 0 ]:
 						key='ipynb_save', icon='💾' )
 				else:
 					col_save.button( 'Save', key='ipynb_save_disabled', disabled=True, icon='💾' )
-				
-				# --------------------------------------------------
-				# Clear
-				# --------------------------------------------------
+				 
+				# -------------- Clear
 				if clear_ipynb:
 					clear_if_active( 'JupyterNotebookLoader' )
 					st.session_state.raw_text = rebuild_raw_text_from_documents( )
 					st.session_state[ '_loader_status' ] = 'Jupyter Notebook Loader state cleared.'
-				
-				# --------------------------------------------------
-				# Load
-				# --------------------------------------------------
+				 
+				# -------------- Load
 				if load_ipynb and notebook_file:
 					with tempfile.TemporaryDirectory( ) as tmp:
 						path = os.path.join( tmp, notebook_file.name )
@@ -1632,7 +1579,7 @@ with tabs[ 0 ]:
 					st.session_state.active_loader = 'JupyterNotebookLoader'
 					st.session_state[ '_loader_status' ] = f'Loaded {len( documents )} notebook document(s).'
 			
-			# --------------------------- Excel Loader
+			# -------------- Excel Loader
 			with st.expander( label='Excel Loader', icon='📊', expanded=False ):
 				excel_file = st.file_uploader( 'Upload Excel file', type=[ 'xlsx', 'xls' ],
 					key='excel_upload', )
@@ -1654,10 +1601,8 @@ with tabs[ 0 ]:
 				unstructured_mode = st.selectbox( 'Document Mode', [ 'single', 'elements' ],
 					index=0, key='excel_unstructured_mode',
 					help='Used only with "Unstructured Documents".' )
-				
-				# --------------------------------------------------
-				# Buttons: Load / Clear / Save
-				# --------------------------------------------------
+				 
+				# -------------- Buttons: Load / Clear / Save
 				col_load, col_clear, col_save = st.columns( 3 )
 				load_excel = col_load.button( 'Load', key='excel_load', icon='📤' )
 				clear_excel = col_clear.button( 'Clear', key='excel_clear', icon='🧹' )
@@ -1673,10 +1618,8 @@ with tabs[ 0 ]:
 						icon='💾' )
 				else:
 					col_save.button( 'Save', key='excel_save_disabled', disabled=True, icon='💾' )
-				
-				# --------------------------------------------------
-				# Clear (remove only ExcelLoader documents)
-				# --------------------------------------------------
+				 
+				# -------------- Clear (remove only ExcelLoader documents)
 				if clear_excel and st.session_state.get( 'documents' ):
 					st.session_state.documents = [ d for d in st.session_state.documents if
 						d.metadata.get( 'loader' ) != 'ExcelLoader' ]
@@ -1695,10 +1638,8 @@ with tabs[ 0 ]:
 					st.session_state.active_loader = None
 					
 					st.info( "ExcelLoader documents removed." )
-				
-				# --------------------------------------------------
-				# Load
-				# --------------------------------------------------
+				 
+				# -------------- Load
 				if load_excel and excel_file:
 					with tempfile.TemporaryDirectory( ) as tmp:
 						excel_path = os.path.join( tmp, excel_file.name )
@@ -1783,10 +1724,8 @@ with tabs[ 0 ]:
 				mode = st.selectbox( 'Mode', [ 'single', 'elements' ], index=0, key='md_mode',
 					help='Use "single" for one combined document or "elements" for element '
 					     'parsing.' )
-				
-				# --------------------------------------------------
-				# Buttons: Load / Clear / Save (same row, same style)
-				# --------------------------------------------------
+				 
+				# -------------- Buttons: Load / Clear / Save (same row, same style)
 				col_load, col_clear, col_save = st.columns( 3 )
 				load_md = col_load.button( 'Load', key='md_load', icon='📤' )
 				clear_md = col_clear.button( 'Clear', key='md_clear', icon='🧹' )
@@ -1803,17 +1742,13 @@ with tabs[ 0 ]:
 						icon='💾' )
 				else:
 					col_save.button( 'Save', key='md_save_disabled', disabled=True, icon='💾' )
-				
-				# --------------------------------------------------
-				# Clear (UNCHANGED behavior)
-				# --------------------------------------------------
+				 
+				# -------------- Clear
 				if clear_md:
 					clear_if_active( 'MarkdownLoader' )
 					st.info( "Markdown Loader state cleared." )
-				
-				# --------------------------------------------------
-				# Load (same behavior, now with explicit mode)
-				# --------------------------------------------------
+				 
+				# -------------- Load (same behavior, now with explicit mode)
 				if load_md and md:
 					with tempfile.TemporaryDirectory( ) as tmp:
 						path = os.path.join( tmp, md.name )
@@ -1832,13 +1767,11 @@ with tabs[ 0 ]:
 					
 					st.success( f"Loaded {len( documents )} Markdown document(s)." )
 			
-			# --------------------------- HTML Loader
+			# ------------- HTML Loader
 			with st.expander( label='HTML Loader', icon='🌐', expanded=False ):
 				html = st.file_uploader( 'Upload HTML', type=[ 'html', 'htm' ], key='html_upload' )
 				
-				# --------------------------------------------------
-				# Buttons: Load / Clear / Save (same row, same style)
-				# --------------------------------------------------
+				# -------------- Buttons: Load / Clear / Save (same row, same style)
 				col_load, col_clear, col_save = st.columns( 3 )
 				load_html = col_load.button( 'Load', key='html_load', icon='📤' )
 				clear_html = col_clear.button( 'Clear', key='html_clear', icon='🧹' )
@@ -1854,17 +1787,13 @@ with tabs[ 0 ]:
 						icon='💾' )
 				else:
 					col_save.button( 'Save', key='html_save_disabled', disabled=True, icon='💾' )
-				
-				# --------------------------------------------------
-				# Clear (UNCHANGED behavior)
-				# --------------------------------------------------
+				 
+				# -------------- Clear
 				if clear_html:
 					clear_if_active( "HtmlLoader" )
 					st.info( "HTML Loader state cleared." )
-				
-				# --------------------------------------------------
-				# Load (UNCHANGED behavior)
-				# --------------------------------------------------
+				 
+				# -------------- Load
 				if load_html and html:
 					with tempfile.TemporaryDirectory( ) as tmp:
 						path = os.path.join( tmp, html.name )
@@ -1880,7 +1809,7 @@ with tabs[ 0 ]:
 					st.session_state.active_loader = "HtmlLoader"
 					st.success( f"Loaded {len( documents )} HTML document(s)." )
 			
-			# --------------------------- JSON Loader
+			# -------------- JSON Loader
 			with st.expander( label='JSON Loader', icon='🧩', expanded=False ):
 				js = st.file_uploader( 'Upload JSON', type=[ 'json', 'jsonl' ],
 					key='json_upload', )
@@ -1899,10 +1828,8 @@ with tabs[ 0 ]:
 					key='json_text_content',
 					help='Turn this off when jq_schema/content_key selects structured values '
 					     'instead of plain text.' )
-				
-				# --------------------------------------------------
-				# Buttons: Load / Clear / Save
-				# --------------------------------------------------
+				 
+				# -------------- Buttons: Load / Clear / Save
 				col_load, col_clear, col_save = st.columns( 3 )
 				load_json = col_load.button( 'Load', key='json_load', icon='📤' )
 				clear_json = col_clear.button( 'Clear', key='json_clear', icon='🧹' )
@@ -1917,17 +1844,13 @@ with tabs[ 0 ]:
 						icon='💾' )
 				else:
 					col_save.button( 'Save', key='json_save_disabled', disabled=True, icon='💾' )
-				
-				# --------------------------------------------------
-				# Clear
-				# --------------------------------------------------
+				 
+				# -------------- Clear
 				if clear_json:
 					clear_if_active( 'JsonLoader' )
 					st.info( 'JSON Loader state cleared.' )
-				
-				# --------------------------------------------------
-				# Load
-				# --------------------------------------------------
+				 
+				# -------------- Load
 				if load_json and js:
 					with tempfile.TemporaryDirectory( ) as tmp:
 						path = os.path.join( tmp, js.name )
@@ -1948,7 +1871,8 @@ with tabs[ 0 ]:
 					st.success( f"Loaded {len( documents )} JSON document(s)." )
 		
 		with st.expander( label='Web Documents', expanded=False ):
-			# --------------------------- ArXiv Loader
+			
+			# ----------- ArXiv Loader
 			with st.expander( label='ArXiv Loader', icon='🧠', expanded=False ):
 				arxiv_query = st.text_input( 'Query', placeholder='e.g., transformer OR llm',
 					key='arxiv_query', )
@@ -1999,7 +1923,7 @@ with tabs[ 0 ]:
 						
 						st.session_state[ '_loader_status' ] = f'Fetched {len( documents )} document(s).'
 			
-			# --------------------------- Wikipedia Loader
+			# -------------- Wikipedia Loader
 			with st.expander( label='Wikipedia Loader', icon='📚', expanded=False ):
 				wiki_query = st.text_input( 'Query',
 					placeholder='e.g., Natural language processing', key='wiki_query', )
@@ -2056,7 +1980,7 @@ with tabs[ 0 ]:
 							f'Fetched {len( documents )} Wikipedia document('
 							f's).')
 			
-			# --------------------------- GitHub Loader
+			# ----------- GitHub Loader
 			with st.expander( label='GitHub Loader', icon='🐙', expanded=False ):
 				gh_url = st.text_input( "GitHub API URL", placeholder="https://api.github.com",
 					value="https://api.github.com", key="gh_url",
@@ -2121,14 +2045,12 @@ with tabs[ 0 ]:
 						
 						st.session_state[ "_loader_status" ] = f"Fetched {len( documents )} GitHub document(s)."
 			
-			# --------------------------- Outlook Loader
+			# ----------- Outlook Loader
 			with st.expander( label='Outlook Loader', icon='📨', expanded=False ):
 				outlook_file = st.file_uploader( 'Upload Outlook Message', type=[ 'msg' ],
 					key='outlook_upload', )
-				
-				# --------------------------------------------------
-				# Buttons: Load / Clear / Save
-				# --------------------------------------------------
+				 
+				# -------------- Buttons: Load / Clear / Save
 				col_load, col_clear, col_save = st.columns( 3 )
 				load_outlook = col_load.button( 'Load', key='outlook_load', icon='📤' )
 				clear_outlook = col_clear.button( 'Clear', key='outlook_clear', icon='🧹' )
@@ -2144,18 +2066,14 @@ with tabs[ 0 ]:
 						key='outlook_save', icon='💾' )
 				else:
 					col_save.button( 'Save', key='outlook_save_disabled', disabled=True, icon='💾' )
-				
-				# --------------------------------------------------
-				# Clear
-				# --------------------------------------------------
+				 
+				# -------------- Clear
 				if clear_outlook:
 					clear_if_active( 'OutlookLoader' )
 					st.session_state.raw_text = rebuild_raw_text_from_documents( )
 					st.session_state[ '_loader_status' ] = 'Outlook Loader state cleared.'
-				
-				# --------------------------------------------------
-				# Load
-				# --------------------------------------------------
+				 
+				# -------------- Load
 				if load_outlook and outlook_file:
 					with tempfile.TemporaryDirectory( ) as tmp:
 						path = os.path.join( tmp, outlook_file.name )
@@ -2186,7 +2104,7 @@ with tabs[ 0 ]:
 						f'Loaded {len( documents )} Outlook message document('
 						f's).')
 			
-			# --------------------------- Web Loader
+			# ------------- Web Loader
 			with st.expander( label="Web Loader", icon='🌐', expanded=False ):
 				urls = st.text_area( "Enter one URL per line",
 					placeholder="https://example.com\nhttps://another.com", key="web_urls", )
@@ -2247,7 +2165,7 @@ with tabs[ 0 ]:
 						st.session_state[
 							"_loader_status" ] = f"Fetched {len( new_docs )} web document(s)."
 			
-			# --------------------------- Web Crawler
+			# -------------- Web Crawler
 			with st.expander( label='Web Crawler', icon='🕷️', expanded=False ):
 				start_url = st.text_input( 'Start URL', placeholder='https://example.com',
 					key='crawl_start_url', )
@@ -2312,7 +2230,7 @@ with tabs[ 0 ]:
 					st.session_state.active_loader = 'WebCrawler'
 					st.session_state[ '_loader_status' ] = f'Crawled {len( documents )} document(s).'
 			
-			# --------------------------- Email Loader
+			# ------------- Email Loader
 			with st.expander( label='E-mail Loader', icon='📧', expanded=False ):
 				email_file = st.file_uploader( 'Upload Email File', type=[ 'eml' ],
 					key='email_upload', )
@@ -2322,10 +2240,8 @@ with tabs[ 0 ]:
 				
 				email_attachments = st.checkbox( 'Process Attachments', value=False,
 					key='email_attachments', )
-				
-				# --------------------------------------------------
-				# Buttons: Load / Clear / Save
-				# --------------------------------------------------
+				 
+				# -------------- Buttons: Load / Clear / Save
 				col_load, col_clear, col_save = st.columns( 3 )
 				load_email = col_load.button( 'Load', key='email_load', icon='📤' )
 				clear_email = col_clear.button( 'Clear', key='email_clear', icon='🧹' )
@@ -2341,18 +2257,14 @@ with tabs[ 0 ]:
 						icon='💾' )
 				else:
 					col_save.button( 'Save', key='email_save_disabled', disabled=True, icon='💾' )
-				
-				# --------------------------------------------------
-				# Clear
-				# --------------------------------------------------
+				 
+				# -------------- Clear
 				if clear_email:
 					clear_if_active( 'EmailLoader' )
 					st.session_state.raw_text = rebuild_raw_text_from_documents( )
 					st.session_state[ '_loader_status' ] = 'Email Loader state cleared.'
-				
-				# --------------------------------------------------
-				# Load
-				# --------------------------------------------------
+				 
+				# -------------- Load
 				if load_email and email_file:
 					with tempfile.TemporaryDirectory( ) as tmp:
 						path = os.path.join( tmp, email_file.name )
@@ -2384,17 +2296,15 @@ with tabs[ 0 ]:
 					st.session_state.active_loader = 'EmailLoader'
 					st.session_state[ '_loader_status' ] = f'Loaded {len( documents )} email document(s).'
 			
-			# --------------------------- PubMed Loader
+			# ----------------- PubMed Loader
 			with st.expander( label='Pub Med Loader', icon='🧬', expanded=False ):
 				pubmed_query = st.text_input( 'PubMed Query', value='', key='pubmed_query',
 					placeholder='e.g. transformer models biomedical NLP', )
 				
 				pubmed_max_docs = st.number_input( 'Maximum Documents', min_value=1, value=5,
 					step=1, key='pubmed_max_docs', )
-				
-				# --------------------------------------------------
-				# Buttons: Load / Clear / Save
-				# --------------------------------------------------
+				 
+				# -------------- Buttons: Load / Clear / Save
 				col_load, col_clear, col_save = st.columns( 3 )
 				load_pubmed = col_load.button( 'Load', key='pubmed_load', icon='📥' )
 				clear_pubmed = col_clear.button( 'Clear', key='pubmed_clear', icon='🧹' )
@@ -2410,18 +2320,14 @@ with tabs[ 0 ]:
 						key='pubmed_save', icon='💾' )
 				else:
 					col_save.button( 'Save', key='pubmed_save_disabled', disabled=True, icon='💾' )
-				
-				# --------------------------------------------------
-				# Clear
-				# --------------------------------------------------
+				 
+				# -------------- Clear
 				if clear_pubmed:
 					clear_if_active( 'PubMedSearchLoader' )
 					st.session_state.raw_text = rebuild_raw_text_from_documents( )
 					st.session_state[ '_loader_status' ] = 'PubMed Loader state cleared.'
-				
-				# --------------------------------------------------
-				# Load
-				# --------------------------------------------------
+				 
+				# -------------- Load
 				if load_pubmed and isinstance( pubmed_query, str ) and pubmed_query.strip( ):
 					loader = PubMedSearchLoader( )
 					documents = loader.load( query=pubmed_query.strip( ),
@@ -2447,7 +2353,7 @@ with tabs[ 0 ]:
 					st.session_state.active_loader = 'PubMedSearchLoader'
 					st.session_state[ '_loader_status' ] = f'Loaded {len( documents )} PubMed document(s).'
 			
-			# --------------------------- Open City Loader
+			# -------------- Open City Loader
 			with st.expander( label='Open City Loader', icon='🏙️', expanded=False ):
 				open_city_id = st.text_input( 'City Domain', value='', key='open_city_id',
 					placeholder='e.g. data.sfgov.org',
@@ -2459,10 +2365,8 @@ with tabs[ 0 ]:
 				
 				open_city_limit = st.number_input( 'Maximum Records', min_value=1, value=100,
 					step=1, key='open_city_limit', )
-				
-				# --------------------------------------------------
-				# Buttons: Load / Clear / Save
-				# --------------------------------------------------
+				 
+				# -------------- Buttons: Load / Clear / Save
 				col_load, col_clear, col_save = st.columns( 3 )
 				load_open_city = col_load.button( 'Load', key='open_city_load', icon='📥' )
 				clear_open_city = col_clear.button( 'Clear', key='open_city_clear', icon='🧹' )
@@ -2478,18 +2382,14 @@ with tabs[ 0 ]:
 						key='open_city_save', icon='💾' )
 				else:
 					col_save.button( 'Save', key='open_city_save_disabled', disabled=True, icon='💾' )
-				
-				# --------------------------------------------------
-				# Clear
-				# --------------------------------------------------
+				 
+				# -------------- Clear
 				if clear_open_city:
 					clear_if_active( 'OpenCityLoader' )
 					st.session_state.raw_text = rebuild_raw_text_from_documents( )
 					st.session_state[ '_loader_status' ] = 'Open City Loader state cleared.'
-				
-				# --------------------------------------------------
-				# Load
-				# --------------------------------------------------
+				 
+				# -------------- Load
 				if (load_open_city and isinstance( open_city_id,
 						str ) and open_city_id.strip( ) and isinstance( open_city_dataset_id,
 					str ) and open_city_dataset_id.strip( )):
@@ -2521,7 +2421,8 @@ with tabs[ 0 ]:
 						'_loader_status' ] = f'Loaded {len( documents )} Open City document(s).'
 		
 		with st.expander( label='Cloud Documents', expanded=False ):
-			# --------------------------- OneDrive Loader
+			
+			# ------------ OneDrive Loader
 			with st.expander( label='OneDrive Loader', icon='🟦', expanded=False ):
 				onedrive_drive_id = st.text_input( 'Drive ID', value='', key='onedrive_drive_id',
 					placeholder='OneDrive drive identifier', )
@@ -2530,10 +2431,8 @@ with tabs[ 0 ]:
 					key='onedrive_folder_path', placeholder='Optional folder path within the '
 					                                        'drive',
 					help='Leave blank to load the drive target directly.', )
-				
-				# --------------------------------------------------
-				# Buttons: Load / Clear / Save
-				# --------------------------------------------------
+				 
+				# -------------- Buttons: Load / Clear / Save
 				col_load, col_clear, col_save = st.columns( 3 )
 				load_onedrive = col_load.button( 'Load', key='onedrive_load', icon='📥' )
 				clear_onedrive = col_clear.button( 'Clear', key='onedrive_clear', icon='🧹' )
@@ -2549,18 +2448,14 @@ with tabs[ 0 ]:
 						key='onedrive_save', icon='💾' )
 				else:
 					col_save.button( 'Save', key='onedrive_save_disabled', disabled=True, icon='💾' )
-				
-				# --------------------------------------------------
-				# Clear
-				# --------------------------------------------------
+				 
+				# -------------- Clear
 				if clear_onedrive:
 					clear_if_active( 'OneDriveDocLoader' )
 					st.session_state.raw_text = rebuild_raw_text_from_documents( )
 					st.session_state[ '_loader_status' ] = 'OneDrive Loader state cleared.'
-				
-				# --------------------------------------------------
-				# Load
-				# --------------------------------------------------
+				 
+				# -------------- Load
 				if (load_onedrive and isinstance( onedrive_drive_id,
 						str ) and onedrive_drive_id.strip( )):
 					loader = OneDriveDocLoader( )
@@ -2596,8 +2491,8 @@ with tabs[ 0 ]:
 					st.session_state.chunked_documents = None
 					st.session_state.df_chunks = None
 					st.session_state.active_loader = 'OneDriveDocLoader'
-					st.session_state[
-						'_loader_status' ] = f'Loaded {len( documents )} OneDrive document(s).'
+					st.session_state[ '_loader_status' ] = \
+						f'Loaded {len( documents )} OneDrive document(s).'
 			
 			# --------------------------- Google Cloud File Loader
 			with st.expander( label='Google Cloud File Loader', icon='☁️', expanded=False ):
@@ -2609,10 +2504,8 @@ with tabs[ 0 ]:
 				
 				gcs_blob = st.text_input( 'Blob', value='', key='gcs_file_blob',
 					placeholder='e.g. documents/report.pdf', )
-				
-				# --------------------------------------------------
-				# Buttons: Load / Clear / Save
-				# --------------------------------------------------
+				 
+				# -------------- Buttons: Load / Clear / Save
 				col_load, col_clear, col_save = st.columns( 3 )
 				load_gcs_file = col_load.button( 'Load', key='gcs_file_load', icon='📥' )
 				clear_gcs_file = col_clear.button( 'Clear', key='gcs_file_clear', icon='🧹' )
@@ -2628,19 +2521,15 @@ with tabs[ 0 ]:
 						key='gcs_file_save', icon='💾' )
 				else:
 					col_save.button( 'Save', key='gcs_file_save_disabled', disabled=True, icon='💾' )
-				
-				# --------------------------------------------------
-				# Clear
-				# --------------------------------------------------
+				 
+				# -------------- Clear
 				if clear_gcs_file:
 					clear_if_active( 'GoogleCloudFileLoader' )
 					st.session_state.raw_text = rebuild_raw_text_from_documents( )
 					st.session_state[ '_loader_status' ] = ('Google Cloud File Loader state '
 					                                        'cleared.')
 				
-				# --------------------------------------------------
-				# Load
-				# --------------------------------------------------
+				# -------------- Load
 				if (load_gcs_file and isinstance( gcs_project_name,
 						str ) and gcs_project_name.strip( ) and isinstance( gcs_bucket,
 					str ) and gcs_bucket.strip( ) and isinstance( gcs_blob,
@@ -2696,10 +2585,8 @@ with tabs[ 0 ]:
 				
 				aws_file_endpoint_url = st.text_input( 'Endpoint URL', value='',
 					key='aws_file_endpoint_url', placeholder='Optional custom endpoint', )
-				
-				# --------------------------------------------------
-				# Buttons: Load / Clear / Save
-				# --------------------------------------------------
+				 
+				# -------------- Buttons: Load / Clear / Save
 				col_load, col_clear, col_save = st.columns( 3 )
 				load_aws_file = col_load.button( label='Load', key='aws_file_load', icon='📤' )
 				clear_aws_file = col_clear.button( label='Clear', key='aws_file_clear', icon='🧹' )
