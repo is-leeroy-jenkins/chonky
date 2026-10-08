@@ -2715,17 +2715,13 @@ with tabs[ 0 ]:
 				else:
 					col_save.button( 'Save', key='aws_file_save_disabled', disabled=True, icon='💾' )
 				
-				# --------------------------------------------------
-				# Clear
-				# --------------------------------------------------
+				# -------------- Clear
 				if clear_aws_file:
 					clear_if_active( 'AwsFileLoader' )
 					st.session_state.raw_text = rebuild_raw_text_from_documents( )
 					st.session_state[ '_loader_status' ] = 'AWS File Loader state cleared.'
 				
-				# --------------------------------------------------
-				# Load
-				# --------------------------------------------------
+				# -------------- Load
 				if (load_aws_file and isinstance( aws_file_bucket,
 						str ) and aws_file_bucket.strip( ) and isinstance( aws_file_key,
 					str ) and aws_file_key.strip( )):
@@ -2778,7 +2774,7 @@ with tabs[ 0 ]:
 					st.session_state.active_loader = 'AwsFileLoader'
 					st.session_state[ '_loader_status' ] = f'Loaded {len( documents )} AWS file document(s).'
 			
-			# --------------------------- Google Bucket Loader
+			# -------- Google Bucket Loader
 			with st.expander( label='Google Bucket Loader', icon='🗂️', expanded=False ):
 				gcs_bucket_project_name = st.text_input( 'Project Name', value='',
 					key='gcs_bucket_project_name', placeholder='e.g. my-gcp-project', )
@@ -2792,9 +2788,7 @@ with tabs[ 0 ]:
 				gcs_bucket_continue_on_failure = st.checkbox( 'Continue On Failure', value=False,
 					key='gcs_bucket_continue_on_failure', )
 				
-				# --------------------------------------------------
-				# Buttons: Load / Clear / Save
-				# --------------------------------------------------
+				# -------------- Buttons: Load / Clear / Save
 				col_load, col_clear, col_save = st.columns( 3 )
 				load_gcs_bucket = col_load.button( 'Load', key='gcs_bucket_load', icon='📥' )
 				clear_gcs_bucket = col_clear.button( 'Clear', key='gcs_bucket_clear', icon='🧹' )
@@ -2811,17 +2805,13 @@ with tabs[ 0 ]:
 				else:
 					col_save.button( 'Save', key='gcs_bucket_save_disabled', disabled=True, icon='💾' )
 				
-				# --------------------------------------------------
-				# Clear
-				# --------------------------------------------------
+				# -------------- Clear
 				if clear_gcs_bucket:
 					clear_if_active( 'GoogleBucketLoader' )
 					st.session_state.raw_text = rebuild_raw_text_from_documents( )
 					st.session_state[ '_loader_status' ] = 'Google Bucket Loader state cleared.'
 				
-				# --------------------------------------------------
-				# Load
-				# --------------------------------------------------
+				# -------------- Load
 				if (load_gcs_bucket and isinstance( gcs_bucket_project_name,
 						str ) and gcs_bucket_project_name.strip( ) and isinstance( gcs_bucket_name,
 					str ) and gcs_bucket_name.strip( )):
@@ -2889,9 +2879,7 @@ with tabs[ 0 ]:
 				aws_bucket_endpoint_url = st.text_input( 'Endpoint URL', value='',
 					key='aws_bucket_endpoint_url', placeholder='Optional custom endpoint', )
 				
-				# --------------------------------------------------
-				# Buttons: Load / Clear / Save
-				# --------------------------------------------------
+				# -------------- Buttons: Load / Clear / Save
 				col_load, col_clear, col_save = st.columns( 3 )
 				load_aws_bucket = col_load.button( 'Load', key='aws_bucket_load', icon='📥' )
 				clear_aws_bucket = col_clear.button( 'Clear', key='aws_bucket_clear', icon='🧹' )
@@ -2909,17 +2897,13 @@ with tabs[ 0 ]:
 				else:
 					col_save.button( 'Save', key='aws_bucket_save_disabled', disabled=True, icon='💾' )
 				
-				# --------------------------------------------------
-				# Clear
-				# --------------------------------------------------
+				# -------------- Clear
 				if clear_aws_bucket:
 					clear_if_active( 'AwsBucketLoader' )
 					st.session_state.raw_text = rebuild_raw_text_from_documents( )
 					st.session_state[ '_loader_status' ] = 'AWS Bucket Loader state cleared.'
 				
-				# --------------------------------------------------
-				# Load
-				# --------------------------------------------------
+				# -------------- Load
 				if (load_aws_bucket and isinstance( aws_bucket_name, str ) and aws_bucket_name.strip( )):
 					verify_value: str = None
 					
@@ -3004,17 +2988,13 @@ with tabs[ 0 ]:
 				else:
 					col_save.button( 'Save', key='spfx_save_disabled', disabled=True, icon='💾' )
 				
-				# --------------------------------------------------
-				# Clear
-				# --------------------------------------------------
+				# -------------- Clear
 				if clear_spfx:
 					clear_if_active( 'SpfxLoader' )
 					st.session_state.raw_text = rebuild_raw_text_from_documents( )
 					st.session_state[ '_loader_status' ] = 'SharePoint Loader state cleared.'
 				
-				# --------------------------------------------------
-				# Load
-				# --------------------------------------------------
+				# -------------- Load
 				if (load_spfx and isinstance( spfx_library_id, str ) and spfx_library_id.strip( )):
 					loader = SpfxLoader( )
 					if isinstance( spfx_folder_id, str ) and spfx_folder_id.strip( ):
@@ -3050,9 +3030,7 @@ with tabs[ 0 ]:
 					st.session_state.active_loader = 'SpfxLoader'
 					st.session_state[ '_loader_status' ] = f'Loaded {len( documents )} SharePoint document(s).'
 	
-	# ------------------------------------------------------------------
-	# RIGHT COLUMN — DOCUMENT RENDERING
-	# ------------------------------------------------------------------
+	# -------------- RIGHT COLUMN — DOCUMENT RENDERING
 	with right:
 		documents = st.session_state.documents
 		if not documents:
@@ -3066,16 +3044,11 @@ with tabs[ 0 ]:
 					st.text_area( 'Content', d.page_content[ : ], height=450,
 						key=f'preview_doc_{i}' )
 	
-	
-	# ------------------------------------------------------------------
-	# NLP METRIC CALCULATIONS
-	# ------------------------------------------------------------------
+	# -------------- NLP METRIC CALCULATIONS
 	metrics_container = st.container( )
 	with metrics_container:
 		if documents is not None:
-			# ----------------------------------------------
-			# Tokenization (session-cached)
-			# ----------------------------------------------
+			# -------------- Tokenization (session-cached)
 			if st.session_state.tokens is None:
 				try:
 					raw_text = rebuild_raw_text_from_documents( )
@@ -3190,9 +3163,7 @@ with tabs[ 0 ]:
 				else:
 					st.caption( 'Install `textstat` to enable readability metrics.' )
 
-# ======================================================================================
-# Uploaded Document Identity
-# ======================================================================================
+# -------------- Uploaded Document Identity
 sync_document_identity( )
 
 # ======================================================================================
@@ -3202,9 +3173,7 @@ with tabs[ 1 ]:
 	raw_text = st.session_state.get( 'raw_text' )
 	active_loader = st.session_state.get( 'active_loader' )
 	
-	# ------------------------------------------------------------------
-	# Session State Defaults
-	# ------------------------------------------------------------------
+	# -------------- Session State Defaults
 	st.session_state.setdefault( 'raw_text_view', '' )
 	st.session_state.setdefault( 'processed_text', '' )
 	st.session_state.setdefault( 'displayed_text', '' )
@@ -3279,9 +3248,7 @@ with tabs[ 1 ]:
 		st.session_state.raw_text_view = raw_text
 		has_text = isinstance( raw_text, str ) and bool( raw_text.strip( ) )
 		
-		# ------------------------------------------------------------------
-		# Layout
-		# ------------------------------------------------------------------
+		# ------------------------- Layout
 		left, right = st.columns( [ 1, 1.5 ], border=True )
 		with left:
 			active = st.session_state.get( 'active_loader' )
@@ -3359,7 +3326,7 @@ with tabs[ 1 ]:
 					help='Extracts named entities where available.' )
 			
 			# ==============================================================
-			# Word-Specific Processing (WordParser)
+			# -------------- Word-Specific Processing (WordParser)
 			# ==============================================================
 			extract_tables = False
 			extract_paragraphs = False
@@ -3371,9 +3338,7 @@ with tabs[ 1 ]:
 				else:
 					st.caption( 'Available when Word documents are loaded.' )
 			
-			# ==============================================================
-			# PDF-Specific Processing (PdfParser)
-			# ==============================================================
+			# -------------- PDF-Specific Processing
 			remove_pdf_repeats = False
 			clean_pdf_artifacts = False
 			repair_pdf_spacing = False
@@ -3406,9 +3371,7 @@ with tabs[ 1 ]:
 				else:
 					st.caption( 'Available when PDF documents are loaded.' )
 			
-			# ==============================================================
-			# HTML Processing
-			# ==============================================================
+			# -------------- HTML Processing
 			strip_scripts = False
 			keep_headings = False
 			keep_paragraphs = False
@@ -3424,9 +3387,7 @@ with tabs[ 1 ]:
 			
 			st.markdown( cfg.BLUE_DIVIDER, unsafe_allow_html=True, )
 			
-			# ==============================================================
-			# Actions (Apply / Reset / Clear / Save)
-			# ==============================================================
+			# ------------ Actions (Apply)
 			col_apply, col_reset, col_clear, col_save = st.columns( 4 )
 			apply_processing = col_apply.button( label='Apply', disabled=not has_text,
 				key='processing_apply_button', icon='✔️', width='stretch' )
@@ -3436,9 +3397,7 @@ with tabs[ 1 ]:
 				key='processing_clear_button', icon='🧹', width='stretch' )
 			save_processed_slot = col_save.empty( )
 			
-			# ==============================================================
-			# Button Events
-			# ==============================================================
+			# ------------ Button Events
 			if reset_processing:
 				st.session_state.processed_text = ''
 				st.session_state.displayed_text = ''
@@ -3470,16 +3429,12 @@ with tabs[ 1 ]:
 			if apply_processing:
 				start_time = time.perf_counter( )
 				
-				# ----------------------------------------------------------
-				# Initialize from raw text
-				# ----------------------------------------------------------
+				# ------------  Initialize from raw text
 				processed_text = raw_text if isinstance( raw_text, str ) else ''
 				tp = TextParser( )
 				nlp = NltkParser( )
 				
-				# ----------------------------------------------------------
-				# PDF reconstruction and PDF-specific cleanup
-				# ----------------------------------------------------------
+				# ------------ PDF reconstruction and PDF-specific cleanup
 				if active == 'PdfLoader':
 					pdf_parser = PdfParser( )
 					pdf_pages = st.session_state.get( 'pdf_pages' )
@@ -3500,9 +3455,7 @@ with tabs[ 1 ]:
 							processed_text,
 							repair_embedded=repair_embedded_hyphenation ) )
 				
-				# ----------------------------------------------------------
-				# Structural cleanup
-				# ----------------------------------------------------------
+				# ------------------------- Structural cleanup
 				if remove_html:
 					processed_text = coerce_text( tp.remove_html( processed_text ) )
 				
@@ -3515,9 +3468,7 @@ with tabs[ 1 ]:
 				if remove_xml:
 					processed_text = coerce_text( tp.remove_xml( processed_text ) )
 				
-				# ----------------------------------------------------------
-				# Encoding and extraction cleanup
-				# ----------------------------------------------------------
+				# ------------ Encoding and extraction cleanup
 				if remove_encodings:
 					processed_text = coerce_text( tp.remove_encodings( processed_text ) )
 				
@@ -3527,9 +3478,7 @@ with tabs[ 1 ]:
 				if remove_fragments:
 					processed_text = coerce_text( tp.remove_fragments( processed_text ) )
 				
-				# ----------------------------------------------------------
-				# Noise and non-lexical cleanup
-				# ----------------------------------------------------------
+				# --------------- Noise and non-lexical cleanup
 				if remove_symbols:
 					processed_text = coerce_text( tp.remove_symbols( processed_text ) )
 				
@@ -3545,21 +3494,15 @@ with tabs[ 1 ]:
 				if reduce_repeats:
 					processed_text = coerce_text( tp.reduce_repeats( processed_text ) )
 				
-				# ----------------------------------------------------------
-				# Word normalization
-				# ----------------------------------------------------------
+				# ---------------- Word normalization
 				if normalize_text:
 					processed_text = coerce_text( tp.normalize_text( processed_text ) )
 				
-				# ----------------------------------------------------------
-				# Lexical refinement
-				# ----------------------------------------------------------
+				# ------------------ Lexical refinement
 				if remove_stopwords:
 					processed_text = coerce_text( tp.remove_stopwords( processed_text ) )
 				
-				# ----------------------------------------------------------
-				# Final defensive artifact cleanup
-				# ----------------------------------------------------------
+				# --------------- Final defensive artifact cleanup
 				if remove_encodings:
 					processed_text = coerce_text( tp.remove_encodings( processed_text ) )
 				
@@ -3569,9 +3512,7 @@ with tabs[ 1 ]:
 				if collapse_whitespace:
 					processed_text = coerce_text( tp.collapse_whitespace( processed_text ) )
 				
-				# ----------------------------------------------------------
-				# Word-specific processing
-				# ----------------------------------------------------------
+				# -------------  Word-specific processing
 				if active == 'WordLoader':
 					word_parser = WordParser( )
 					if extract_tables and hasattr( word_parser, 'extract_tables' ):
@@ -3581,15 +3522,11 @@ with tabs[ 1 ]:
 						processed_text = coerce_text(
 							word_parser.extract_paragraphs( processed_text ) )
 				
-				# ----------------------------------------------------------
-				# HTML-specific processing
-				# ----------------------------------------------------------
+				# ---------------  HTML-specific processing
 				if active == 'HtmlLoader' and strip_scripts:
 					processed_text = coerce_text( tp.remove_html( processed_text ) )
 				
-				# ----------------------------------------------------------
-				# Token processing
-				# ----------------------------------------------------------
+				# -------------  Token processing
 				display_text = processed_text
 				st.session_state.nltk_word_tokens = [ ]
 				st.session_state.nltk_sentence_tokens = [ ]
@@ -3638,24 +3575,18 @@ with tabs[ 1 ]:
 					st.session_state.nltk_named_entities if
 					isinstance( entity, str ) and entity.strip( ) )
 				
-				# ----------------------------------------------------------
-				# Final punctuation and delimiter cleanup
-				# ----------------------------------------------------------
+				#------------------  Final punctuation and delimiter cleanup
 				if reduce_repeats:
 					processed_text = coerce_text( tp.reduce_repeats( processed_text ) )
 					display_text = coerce_text( tp.reduce_repeats( display_text ) )
 				
-				# ----------------------------------------------------------
-				# Finalize timing
-				# ----------------------------------------------------------
+				# ------------------ Finalize timing
 				end_time = time.perf_counter( )
 				st.session_state.start_time = start_time
 				st.session_state.end_time = end_time
 				st.session_state.total_time = end_time - start_time
 				
-				# ----------------------------------------------------------
-				# Commit processed text
-				# ----------------------------------------------------------
+				# --------------- Commit processed text
 				st.session_state.processed_text = coerce_text( processed_text )
 				st.session_state.displayed_text = coerce_text( display_text )
 				if not st.session_state.displayed_text.strip( ):
@@ -3671,9 +3602,7 @@ with tabs[ 1 ]:
 					st.warning(
 						'Processing completed, but the selected options produced empty text.' )
 			
-			# ==============================================================
-			# Save Processed Text
-			# ==============================================================
+			# ---------------- Save Processed Text
 			can_save_processed = (
 					isinstance( st.session_state.get( 'processed_text' ), str ) and bool(
 				st.session_state.get( 'processed_text' ).strip( ) ))
@@ -3689,9 +3618,7 @@ with tabs[ 1 ]:
 				save_processed_slot.button( 'Save', key='processed_text_save_disabled',
 					disabled=True, icon='💾', width='stretch' )
 		
-		# ------------------------------------------------------------------
-		# RIGHT COLUMN — Text Views
-		# ------------------------------------------------------------------
+		# --------------- RIGHT COLUMN — Text Views
 		with right:
 			raw_text_view = st.session_state.get( 'raw_text_view' )
 			raw_text_current = st.session_state.get( 'raw_text' )
@@ -3749,24 +3676,18 @@ with tabs[ 2 ]:
 	
 	processed_text = st.session_state.get( 'processed_text' )
 	
-	# ------------------------------------------------------------------
-	# Guard
-	# ------------------------------------------------------------------
+	# -------------- Guard
 	if not isinstance( processed_text, str ) or not processed_text.strip( ):
 		st.info( 'Run text processing before semantic analysis.' )
 		st.stop( )
 	
-	# ------------------------------------------------------------------
-	# Chunking Modes
-	# ------------------------------------------------------------------
+	# ---------- Chunking Modes
 	chunk_modes = st.session_state.get( 'chunk_modes' )
 	if not isinstance( chunk_modes, (list, tuple) ) or not chunk_modes:
 		chunk_modes = [ 'tokens', 'chars' ]
 		st.session_state.chunk_modes = list( chunk_modes )
 	
-	# ------------------------------------------------------------------
-	# Controls
-	# ------------------------------------------------------------------
+	# ------------ Controls
 	st.markdown( '#### Semantic Analysis' )
 	col_1, col_2, col_3 = st.columns( 3, border=True )
 	with col_1:
@@ -3790,9 +3711,8 @@ with tabs[ 2 ]:
 	
 	st.markdown( cfg.BLUE_DIVIDER, unsafe_allow_html=True, )
 	st.markdown( '#### Chunking Metrics' )
-	# ------------------------------------------------------------------
-	# Reset
-	# ------------------------------------------------------------------
+	
+	# ------------ Reset
 	if reset_chunking:
 		st.session_state.chunked_documents = None
 		st.session_state.df_chunk_records = None
@@ -3802,9 +3722,7 @@ with tabs[ 2 ]:
 		invalidate_embedding_state( clear_chunks=False )
 		st.info( 'Chunking controls reset.' )
 	
-	# ------------------------------------------------------------------
-	# Chunk Generation
-	# ------------------------------------------------------------------
+	# ----------- Chunk Generation
 	if run_chunking:
 		if int( overlap ) >= int( chunk_size ):
 			st.error( 'Overlap must be smaller than chunk size.' )
@@ -3819,9 +3737,7 @@ with tabs[ 2 ]:
 				chunked_documents = [ ]
 				st.error( f'Unsupported chunking mode: {mode}' )
 			
-			# ----------------------------------------------------------
-			# Canonical Chunk Records
-			# ----------------------------------------------------------
+			# --------- Canonical Chunk Records
 			if chunked_documents:
 				df_chunk_records = build_chunk_records( chunks=chunked_documents, mode=mode,
 					configured_size=int( chunk_size ), configured_overlap=int( overlap ),
@@ -3845,9 +3761,7 @@ with tabs[ 2 ]:
 				invalidate_embedding_state( clear_chunks=False )
 				st.warning( 'No chunks were generated.' )
 	
-	# ------------------------------------------------------------------
-	# Chunk Validation
-	# ------------------------------------------------------------------
+	# ------------------------- Chunk Validation
 	df_chunk_records = st.session_state.get( 'df_chunk_records' )
 	if isinstance( df_chunk_records, pd.DataFrame ) and not df_chunk_records.empty:
 		token_counts = df_chunk_records[ 'Token Count' ]
@@ -3857,18 +3771,14 @@ with tabs[ 2 ]:
 		metric_3.metric( 'Median Tokens', f'{int( token_counts.median( ) ):,}', )
 		metric_4.metric( 'Maximum Tokens', f'{int( token_counts.max( ) ):,}', )
 	
-	# ------------------------------------------------------------------
-	# Tokenization and Vocabulary
-	# ------------------------------------------------------------------
+	# ------------- Tokenization and Vocabulary
 	processor = TextParser( )
 	tokens = word_tokenize( processed_text )
 	vocabulary = processor.create_vocabulary( tokens )
 	st.session_state.tokens = tokens
 	st.session_state.vocabulary = vocabulary
 	
-	# ------------------------------------------------------------------
-	# Frequency Distribution
-	# ------------------------------------------------------------------
+	# --------------  Frequency Distribution
 	df_frequency = processor.create_frequency_distribution( tokens )
 	st.session_state.df_frequency = df_frequency
 	if isinstance( df_frequency, pd.DataFrame ) and not df_frequency.empty:
@@ -3877,9 +3787,7 @@ with tabs[ 2 ]:
 	else:
 		st.session_state.df_token_frequency = None
 	
-	# ------------------------------------------------------------------
-	# Three-Column Layout
-	# ------------------------------------------------------------------
+	# ------------ Three-Column Layout
 	col_tokens, col_vocab, col_freq = st.columns( [ 1, 1, 2 ], border=True,
 		vertical_alignment='top', )
 	
@@ -4019,15 +3927,11 @@ with tabs[ 3 ]:
 		
 		return [ p for p in parts if isinstance( p, str ) and p.strip( ) ]
 	
-	# ------------------------------------------------------------------
-	# Fixed vector-space schema
-	# ------------------------------------------------------------------
+	# ------------------------- Fixed vector-space schema
 	dimensions = [ 'D0', 'D1', 'D2', 'D3', 'D4', 'D5', 'D6', 'D7', 'D8', 'D9', 'D10', 'D11', 'D12',
 		'D13', 'D14' ]
 	
-	# ------------------------------------------------------------------
-	# Canonical diagnostics state
-	# ------------------------------------------------------------------
+	# ------------------------- Canonical diagnostics state
 	if isinstance( df_frequency, pd.DataFrame ) and not df_frequency.empty:
 		if 'Word' in df_frequency.columns and 'Frequency' in df_frequency.columns:
 			st.session_state.df_token_frequency = df_frequency.rename(
@@ -4055,15 +3959,11 @@ with tabs[ 3 ]:
 	else:
 		st.session_state.df_sentence_tokens = None
 	
-	# ------------------------------------------------------------------
-	# Canonical Sentence Diagnostic State
-	# ------------------------------------------------------------------
+	# ------------------------- Canonical Sentence Diagnostic State
 	lines = sentences if isinstance( sentences, list ) else [ ]
 	st.session_state.lines = lines if lines else None
 	
-	# ------------------------------------------------------------------
-	# Canonical Chunk Data
-	# ------------------------------------------------------------------
+	# ------------------------- Canonical Chunk Data
 	chunked_documents = st.session_state.get( 'chunked_documents' )
 	df_chunk_records = st.session_state.get( 'df_chunk_records' )
 	
@@ -4079,9 +3979,7 @@ with tabs[ 3 ]:
 		
 		st.session_state.df_chunk_records = df_chunk_records
 	
-	# ------------------------------------------------------------------
-	# LEFT COLUMN — Chunked Data
-	# ------------------------------------------------------------------
+	# ------------------------- LEFT COLUMN — Chunked Data
 	with line_col:
 		st.text( 'Chunked Data' )
 		if isinstance( df_chunk_records, pd.DataFrame ) and not df_chunk_records.empty:
@@ -4104,9 +4002,7 @@ with tabs[ 3 ]:
 		else:
 			st.info( 'Run chunking in Semantic Analysis first.' )
 	
-	# ------------------------------------------------------------------
-	# RIGHT COLUMN — Chunk Summary
-	# ------------------------------------------------------------------
+	# ------------------------- RIGHT COLUMN — Chunk Summary
 	with chunk_col:
 		if isinstance( df_chunk_records, pd.DataFrame ) and not df_chunk_records.empty:
 			st.text( f'Chunk Summary: {len( df_chunk_records ):,} chunks' )
@@ -4199,7 +4095,7 @@ with tabs[ 3 ]:
 			hapax_ratio = hapax_count / unique_tokens if unique_tokens > 0 else 0.0
 			sentence_lengths = (
 				[ len( _safe_word_tokenize( s ) ) for s in sentences ] if isinstance( sentences,
-					list ) and sentences else [ ])
+					list ) and sentences else [ ] )
 			sentence_lengths = [ n for n in sentence_lengths if isinstance( n, int ) and n > 0 ]
 			avg_sentence_len = (
 				sum( sentence_lengths ) / len( sentence_lengths ) if sentence_lengths else 0.0)
@@ -4214,16 +4110,12 @@ with tabs[ 3 ]:
 		else:
 			st.info( 'Token readiness metrics unavailable.' )
 
-# ======================================================================================
 # Tab - Embeddings
-# ======================================================================================
 with tabs[ 4 ]:
 	import hashlib
 	import tiktoken
 	
-	# ======================================================================================
-	# Embedding Utilities
-	# ======================================================================================
+	# ------------------------- Embedding Utilities
 	def embedding_key( name: str ) -> str:
 		"""Create an embedding widget key.
 		
@@ -4513,9 +4405,7 @@ with tabs[ 4 ]:
 		st.session_state.embedding_source_signature = source_signature
 		st.session_state.embedding_is_stale = False
 	
-	# ======================================================================================
-	# Embedding State
-	# ======================================================================================
+	# ------------------------- Embedding State
 	if not isinstance( st.session_state.get( 'df_embedding_output' ), pd.DataFrame ):
 		st.session_state.df_embedding_output = pd.DataFrame( )
 	
@@ -4535,9 +4425,7 @@ with tabs[ 4 ]:
 	chunked_documents = st.session_state.get( 'chunked_documents' )
 	maximum_input_tokens = 8000
 	
-	# ======================================================================================
-	# Layout
-	# ======================================================================================
+	# ------------------------- Layout
 	left, right = st.columns( [ 1, 1.5 ], border=True )
 	with left:
 		st.markdown( '##### Embedding Providers' )
@@ -4746,9 +4634,7 @@ with tabs[ 4 ]:
 				except Exception as exception:
 					st.error( f'Gemini embedding generation failed: {exception}' )
 	
-	# ======================================================================================
-	# Embedding Input
-	# ======================================================================================
+	# ------------------------- Embedding Input
 	with right:
 		st.markdown( '##### Embedding Data' )
 		
@@ -4761,9 +4647,7 @@ with tabs[ 4 ]:
 		st.data_editor( df_embedding_input, use_container_width=True, hide_index=True,
 			disabled=True, key=embedding_key( 'embedding_input_view' ) )
 	
-	# ======================================================================================
-	# Embedding Results
-	# ======================================================================================
+	# ------------------------- Embedding Results
 	st.markdown( cfg.BLUE_DIVIDER, unsafe_allow_html=True )
 	st.subheader( 'Tensor Data' )
 	
@@ -4780,9 +4664,7 @@ with tabs[ 4 ]:
 		st.data_editor( st.session_state.df_embedding_output, use_container_width=True,
 			hide_index=True, disabled=True, key=embedding_key( 'embedding_output_view' ) )
 	
-	# ======================================================================================
-	# Tensor Embedding — Dimensionality Reduction Diagnostics (t-SNE / UMAP)
-	# ======================================================================================
+	# -------- Tensor Embedding — Dimensionality Reduction Diagnostics (t-SNE / UMAP)
 	st.markdown( cfg.BLUE_DIVIDER, unsafe_allow_html=True )
 	
 	st.subheader( 'Embedding Diagnostics (t-SNE / UMAP)' )
@@ -4792,9 +4674,7 @@ with tabs[ 4 ]:
 	emb_array: np.ndarray | None = None
 	diagnostic_error: str | None = None
 	
-	# ------------------------------------------------------------------
-	# Embedding validation
-	# ------------------------------------------------------------------
+	# ------------------------- Embedding validation
 	if embedding_is_stale:
 		diagnostic_error = (
 			'The current embeddings are stale because the selected source content changed. '
@@ -4838,9 +4718,7 @@ with tabs[ 4 ]:
 			emb_array = None
 			diagnostic_error = str( exception )
 	
-	# ------------------------------------------------------------------
-	# Guard: validated embeddings availability
-	# ------------------------------------------------------------------
+	# ------------- Guard: validated embeddings availability
 	if diagnostic_error:
 		if embeddings is None:
 			st.info( diagnostic_error )
@@ -4874,9 +4752,7 @@ with tabs[ 4 ]:
 			random_state = st.number_input( 'Random Seed', min_value=0, value=42, step=1,
 				key='embedding_reduction_seed' )
 		
-		# ------------------------------------------------------------------
-		# Dimensionality reduction
-		# ------------------------------------------------------------------
+		# ----------- Dimensionality reduction
 		reduced: np.ndarray | None = None
 		reduction_error: str | None = None
 		try:
@@ -4907,9 +4783,7 @@ with tabs[ 4 ]:
 			reduced = None
 			reduction_error = str( exception )
 		
-		# ------------------------------------------------------------------
-		# Visualization
-		# ------------------------------------------------------------------
+		# ------------------------- Visualization
 		if reduction_error:
 			st.error( f'Dimensionality reduction failed: {reduction_error}' )
 		elif reduced is not None:
@@ -4947,9 +4821,7 @@ with tabs[ 4 ]:
 with tabs[ 5 ]:
 	st.subheader( 'Vector Database' )
 
-	# ------------------------------------------------------------------
-	# Required upstream state
-	# ------------------------------------------------------------------
+	# ----------- Required upstream state
 	embeddings = st.session_state.get( 'embeddings' )
 	embedding_texts = st.session_state.get( 'embedding_texts' )
 	embedding_model = st.session_state.get( 'embedding_model' )
@@ -4957,17 +4829,13 @@ with tabs[ 5 ]:
 	collection_name = st.session_state.get( 'collection_name' ) or 'default_document'
 	document_name = st.session_state.get( 'document_name' ) or 'default_document'
 
-	# ------------------------------------------------------------------
-	# Guard: embeddings must exist before continuing
-	# ------------------------------------------------------------------
+	# ------------ Guard: embeddings must exist before continuing
 	if not (isinstance( embeddings, list ) and isinstance( embedding_texts,
 			list ) and embedding_texts and embedding_model and embedding_provider):
 		st.info( 'Generate embeddings before persisting to the vector database.' )
 		st.stop( )
 
-	# ------------------------------------------------------------------
-	# Derive vector metadata
-	# ------------------------------------------------------------------
+	# ------------------------- Derive vector metadata
 	emb_array = np.asarray( embeddings, dtype=float )
 
 	if emb_array.ndim == 1:
@@ -4979,9 +4847,7 @@ with tabs[ 5 ]:
 
 	dim = int( emb_array.shape[ 1 ] )
 
-	# ------------------------------------------------------------------
-	# Vector Store Selection
-	# ------------------------------------------------------------------
+	# ------------------------- Vector Store Selection
 	selector_col, cloud_col = st.columns( [ 0.65, 0.35 ], border=True )
 	with selector_col:
 		vector_store_provider = st.radio( 'Storage Mode', options=[ 'SQLiteVec', 'Cloud' ],
@@ -4997,9 +4863,7 @@ with tabs[ 5 ]:
 
 	st.markdown( cfg.BLUE_DIVIDER, unsafe_allow_html=True )
 
-	# ======================================================================================
-	# SQLiteVec
-	# ======================================================================================
+	# ------------------------- SQLiteVec
 	if vector_store_provider == 'SQLiteVec':
 		st.markdown( '#### SQLiteVec' )
 		local_document_name = st.text_input( 'Document / Collection Name', value=document_name,
@@ -5011,9 +4875,7 @@ with tabs[ 5 ]:
 
 		st.caption( f'Vector Table: `{table_name}`' )
 
-		# ------------------------------------------------------------------
-		# Database connection
-		# ------------------------------------------------------------------
+		# ------------------------- Database connection
 		db_path = st.text_input( 'SQLite Database Path', value='vectors.db',
 			key='sqlite_vector_db_path' )
 		st.markdown( cfg.BLUE_DIVIDER, unsafe_allow_html=True )
@@ -5028,9 +4890,7 @@ with tabs[ 5 ]:
 				conn.close( )
 				st.success( f'Created vector table `{table_name}`.' )
 
-		# ------------------------------------------------------------------
-		# Insert Embeddings
-		# ------------------------------------------------------------------
+		# ------------------------- Insert Embeddings
 		with col_insert:
 			if st.button( 'Insert Embeddings', icon='🔣', key='sqlite_insert_embeddings' ):
 				conn = sqlite3.connect( db_path )
@@ -5043,9 +4903,7 @@ with tabs[ 5 ]:
 				conn.close( )
 				st.success( f'Inserted {len( embeddings )} embeddings into `{table_name}`.' )
 
-		# ------------------------------------------------------------------
-		# Drop Embeddings
-		# ------------------------------------------------------------------
+		# ------------------------- Drop Embeddings
 		with col_delete:
 			if st.button( label='Drop Vector Table', type='secondary', icon='❌',
 					key='sqlite_drop_vector_table' ):
@@ -5058,9 +4916,7 @@ with tabs[ 5 ]:
 
 		st.markdown( cfg.BLUE_DIVIDER, unsafe_allow_html=True )
 
-		# ------------------------------------------------------------------
-		# Verify Embeddings
-		# ------------------------------------------------------------------
+		# ------------------------- Verify Embeddings
 		if st.checkbox( 'Inspect Vector Table', key='sqlite_inspect_vector_table' ):
 			try:
 				conn = sqlite3.connect( db_path )
@@ -5070,9 +4926,7 @@ with tabs[ 5 ]:
 			except Exception as exception:
 				st.error( f'Vector-table inspection failed: {exception}' )
 
-		# ======================================================================================
-		# Similarity Search (sqlite-vec)
-		# ======================================================================================
+		# ------------------------- Similarity Search (sqlite-vec)
 		st.subheader( 'Similarity Search' )
 
 		query_text = st.text_area( 'Query Text',
