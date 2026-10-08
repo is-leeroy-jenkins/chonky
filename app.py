@@ -3212,12 +3212,13 @@ with tabs[ 1 ]:
 				nltk_named_entities = st.checkbox( 'Named Entity Recognition',
 					help='Extracts named entities where available.' )
 			
-			# ==============================================================
 			# -------------- Word-Specific Processing (WordParser)
-			# ==============================================================
 			extract_tables = False
 			extract_paragraphs = False
-			
+
+			# ==============================================================
+			# Word Processing
+			# ==============================================================
 			with st.expander( 'Word Processing', icon='📄', expanded=False ):
 				if active == 'WordLoader':
 					extract_tables = st.checkbox( 'Extract Tables' )
@@ -3342,7 +3343,7 @@ with tabs[ 1 ]:
 							processed_text,
 							repair_embedded=repair_embedded_hyphenation ) )
 				
-				# ------------------------- Structural cleanup
+				# ---------- Structural cleanup
 				if remove_html:
 					processed_text = coerce_text( tp.remove_html( processed_text ) )
 				
@@ -3814,11 +3815,11 @@ with tabs[ 3 ]:
 		
 		return [ p for p in parts if isinstance( p, str ) and p.strip( ) ]
 	
-	# ------------------------- Fixed vector-space schema
+	# -------------- Fixed vector-space schema
 	dimensions = [ 'D0', 'D1', 'D2', 'D3', 'D4', 'D5', 'D6', 'D7', 'D8', 'D9', 'D10', 'D11', 'D12',
 		'D13', 'D14' ]
 	
-	# ------------------------- Canonical diagnostics state
+	# ------------- Canonical diagnostics state
 	if isinstance( df_frequency, pd.DataFrame ) and not df_frequency.empty:
 		if 'Word' in df_frequency.columns and 'Frequency' in df_frequency.columns:
 			st.session_state.df_token_frequency = df_frequency.rename(
@@ -3846,11 +3847,11 @@ with tabs[ 3 ]:
 	else:
 		st.session_state.df_sentence_tokens = None
 	
-	# ------------------------- Canonical Sentence Diagnostic State
+	# ------------ Canonical Sentence Diagnostic State
 	lines = sentences if isinstance( sentences, list ) else [ ]
 	st.session_state.lines = lines if lines else None
 	
-	# ------------------------- Canonical Chunk Data
+	# ---------- Canonical Chunk Data
 	chunked_documents = st.session_state.get( 'chunked_documents' )
 	df_chunk_records = st.session_state.get( 'df_chunk_records' )
 	
@@ -3866,7 +3867,7 @@ with tabs[ 3 ]:
 		
 		st.session_state.df_chunk_records = df_chunk_records
 	
-	# ------------------------- LEFT COLUMN — Chunked Data
+	# ------------ LEFT COLUMN — Chunked Data
 	with line_col:
 		st.text( 'Chunked Data' )
 		if isinstance( df_chunk_records, pd.DataFrame ) and not df_chunk_records.empty:
@@ -3889,7 +3890,7 @@ with tabs[ 3 ]:
 		else:
 			st.info( 'Run chunking in Semantic Analysis first.' )
 	
-	# ------------------------- RIGHT COLUMN — Chunk Summary
+	# ------------ RIGHT COLUMN — Chunk Summary
 	with chunk_col:
 		if isinstance( df_chunk_records, pd.DataFrame ) and not df_chunk_records.empty:
 			st.text( f'Chunk Summary: {len( df_chunk_records ):,} chunks' )
@@ -4002,7 +4003,7 @@ with tabs[ 4 ]:
 	import hashlib
 	import tiktoken
 	
-	# ------------------------- Embedding Utilities
+	# ------------- Embedding Utilities
 	def embedding_key( name: str ) -> str:
 		"""Create an embedding widget key.
 		
@@ -4292,7 +4293,7 @@ with tabs[ 4 ]:
 		st.session_state.embedding_source_signature = source_signature
 		st.session_state.embedding_is_stale = False
 	
-	# ------------------------- Embedding State
+	# ------------ Embedding State
 	if not isinstance( st.session_state.get( 'df_embedding_output' ), pd.DataFrame ):
 		st.session_state.df_embedding_output = pd.DataFrame( )
 	
@@ -4312,7 +4313,7 @@ with tabs[ 4 ]:
 	chunked_documents = st.session_state.get( 'chunked_documents' )
 	maximum_input_tokens = 8000
 	
-	# ------------------------- Layout
+	# -------------- Layout
 	left, right = st.columns( [ 1, 1.5 ], border=True )
 	with left:
 		st.markdown( '##### Embedding Providers' )
@@ -4521,7 +4522,7 @@ with tabs[ 4 ]:
 				except Exception as exception:
 					st.error( f'Gemini embedding generation failed: {exception}' )
 	
-	# ------------------------- Embedding Input
+	# ---------- Embedding Input
 	with right:
 		st.markdown( '##### Embedding Data' )
 		
@@ -4534,7 +4535,7 @@ with tabs[ 4 ]:
 		st.data_editor( df_embedding_input, use_container_width=True, hide_index=True,
 			disabled=True, key=embedding_key( 'embedding_input_view' ) )
 	
-	# ------------------------- Embedding Results
+	# ------------ Embedding Results
 	st.markdown( cfg.BLUE_DIVIDER, unsafe_allow_html=True )
 	st.subheader( 'Tensor Data' )
 	
@@ -4561,7 +4562,7 @@ with tabs[ 4 ]:
 	emb_array: np.ndarray | None = None
 	diagnostic_error: str | None = None
 	
-	# ------------------------- Embedding validation
+	# ----------- Embedding validation
 	if embedding_is_stale:
 		diagnostic_error = (
 			'The current embeddings are stale because the selected source content changed. '
@@ -4734,7 +4735,7 @@ with tabs[ 5 ]:
 
 	dim = int( emb_array.shape[ 1 ] )
 
-	# ------------------------- Vector Store Selection
+	# ------------- Vector Store Selection
 	selector_col, cloud_col = st.columns( [ 0.65, 0.35 ], border=True )
 	with selector_col:
 		vector_store_provider = st.radio( 'Storage Mode', options=[ 'SQLiteVec', 'Cloud' ],
@@ -4750,7 +4751,7 @@ with tabs[ 5 ]:
 
 	st.markdown( cfg.BLUE_DIVIDER, unsafe_allow_html=True )
 
-	# ------------------------- SQLiteVec
+	# ------------- SQLiteVec
 	if vector_store_provider == 'SQLiteVec':
 		st.markdown( '#### SQLiteVec' )
 		local_document_name = st.text_input( 'Document / Collection Name', value=document_name,
@@ -4762,7 +4763,7 @@ with tabs[ 5 ]:
 
 		st.caption( f'Vector Table: `{table_name}`' )
 
-		# ------------------------- Database connection
+		# ---------- Database connection
 		db_path = st.text_input( 'SQLite Database Path', value='vectors.db',
 			key='sqlite_vector_db_path' )
 		st.markdown( cfg.BLUE_DIVIDER, unsafe_allow_html=True )
@@ -4777,7 +4778,7 @@ with tabs[ 5 ]:
 				conn.close( )
 				st.success( f'Created vector table `{table_name}`.' )
 
-		# ------------------------- Insert Embeddings
+		# --------- Insert Embeddings
 		with col_insert:
 			if st.button( 'Insert Embeddings', icon='🔣', key='sqlite_insert_embeddings' ):
 				conn = sqlite3.connect( db_path )
@@ -4790,7 +4791,7 @@ with tabs[ 5 ]:
 				conn.close( )
 				st.success( f'Inserted {len( embeddings )} embeddings into `{table_name}`.' )
 
-		# ------------------------- Drop Embeddings
+		# ----------- Drop Embeddings
 		with col_delete:
 			if st.button( label='Drop Vector Table', type='secondary', icon='❌',
 					key='sqlite_drop_vector_table' ):
@@ -4803,7 +4804,7 @@ with tabs[ 5 ]:
 
 		st.markdown( cfg.BLUE_DIVIDER, unsafe_allow_html=True )
 
-		# ------------------------- Verify Embeddings
+		# ----------- Verify Embeddings
 		if st.checkbox( 'Inspect Vector Table', key='sqlite_inspect_vector_table' ):
 			try:
 				conn = sqlite3.connect( db_path )
@@ -4813,7 +4814,7 @@ with tabs[ 5 ]:
 			except Exception as exception:
 				st.error( f'Vector-table inspection failed: {exception}' )
 
-		# ------------------------- Similarity Search (sqlite-vec)
+		# ----------- Similarity Search (sqlite-vec)
 		st.subheader( 'Similarity Search' )
 
 		query_text = st.text_area( 'Query Text',
@@ -4844,9 +4845,7 @@ with tabs[ 5 ]:
 				st.error( f'Similarity search failed: {ex}' )
 				results = None
 
-		# ------------------------------------------------------------------
-		# Results Rendering (with similarity threshold)
-		# ------------------------------------------------------------------
+		# --------- Results Rendering (with similarity threshold)
 		if results:
 			filtered_results = [ (doc, score) for (doc, score) in results if
 				score >= similarity_threshold ]
@@ -4866,9 +4865,7 @@ with tabs[ 5 ]:
 		else:
 			st.info( 'No results to display.' )
 
-	# ======================================================================================
-	# Cloud Vector Stores
-	# ======================================================================================
+	# ----------- Cloud Vector Stores
 	else:
 		remote_valid, remote_message = validate_remote_vector_state( )
 		chroma_api_key = st.session_state.get( 'chroma_api_key', '' )
@@ -4917,9 +4914,7 @@ with tabs[ 5 ]:
 		clear_remote = col_clear.button( 'Clear Collection', icon='❌', width='stretch',
 			key='cloud_clear_collection', disabled=not credentials_valid )
 
-		# ------------------------------------------------------------------
-		# Persist remote vectors
-		# ------------------------------------------------------------------
+		# ------------- Persist remote vectors
 		if persist_remote:
 			try:
 				ids = [ f'{collection_name}_{index + 1:06d}' for index in range( len( embedding_texts ) ) ]
@@ -4971,9 +4966,7 @@ with tabs[ 5 ]:
 			except Exception as exception:
 				st.error( f'{cloud_provider} persistence failed: {exception}' )
 
-		# ------------------------------------------------------------------
-		# Inspect remote vector store
-		# ------------------------------------------------------------------
+		# -------------- Inspect remote vector store
 		if inspect_remote:
 			try:
 				if cloud_provider == 'Chroma':
@@ -5001,9 +4994,7 @@ with tabs[ 5 ]:
 			except Exception as exception:
 				st.error( f'{cloud_provider} inspection failed: {exception}' )
 
-		# ------------------------------------------------------------------
-		# Clear remote collection / namespace
-		# ------------------------------------------------------------------
+		# ------------- Clear remote collection / namespace
 		if clear_remote:
 			try:
 				if cloud_provider == 'Chroma':
@@ -5054,7 +5045,8 @@ with tabs[ 5 ]:
 					distances = response.get( 'distances', [ [ ] ] )[ 0 ]
 
 					for rank, (result_text, metadata, distance) in enumerate(
-							zip( documents, metadatas, distances ), start=1 ):
+							zip( documents,
+								metadatas, distances ), start=1 ):
 						with st.expander( f'#{rank} — Distance: {float( distance ):.4f}',
 								expanded=(rank == 1) ):
 							st.json( metadata )
