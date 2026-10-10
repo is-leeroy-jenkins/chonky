@@ -37,6 +37,26 @@ and inspect corpus structure; generate embeddings through hosted providers; pers
 sqlite-vec; and run semantic similarity search over stored chunks.
 
 
+## PyPI installation
+
+```powershell
+python -m pip install chonky-py
+chonky
+```
+
+For the Windows tabless desktop window (WebView2 Runtime required):
+
+```powershell
+python -m pip install "chonky-py[desktop]"
+chonky-desktop
+```
+
+Python 3.11 or later is required. The distribution is `chonky-py`; the import
+namespace is `chonky`. Do not install it alongside the unrelated PyPI `chonky`
+package in the same environment. Provider credentials and external NLP/model
+resources remain separate. Publication steps are in
+[the PyPI release guide](resources/pypi-release.md).
+
 ## 🎥 Demo
 
 ![](https://github.com/is-leeroy-jenkins/Chonky/blob/main/resources/images/chonky-demo.gif)

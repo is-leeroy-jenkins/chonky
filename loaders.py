@@ -51,8 +51,14 @@
 import arxiv
 import docx2txt
 
-from boogr import Error, Logger
-import config as cfg
+if __package__:
+	from .boogr import Error, Logger
+else:
+	from boogr import Error, Logger
+if __package__:
+	from . import config as cfg
+else:
+	import config as cfg
 import glob
 from langchain_text_splitters import Language, RecursiveCharacterTextSplitter, CharacterTextSplitter
 from langchain_community.document_loaders import UnstructuredHTMLLoader
