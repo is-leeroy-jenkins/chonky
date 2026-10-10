@@ -41,14 +41,14 @@ sqlite-vec; and run semantic similarity search over stored chunks.
 
 ```powershell
 python -m pip install chonky-py
-chonky
+chonky-browser
 ```
 
 For the Windows tabless desktop window (WebView2 Runtime required):
 
 ```powershell
 python -m pip install "chonky-py[desktop]"
-chonky-desktop
+chonky
 ```
 
 Python 3.11 or later is required. The distribution is `chonky-py`; the import

@@ -21,7 +21,7 @@ Distribution: **chonky-py**. Import: **chonky**. Initial version: **0.1.0**.
 
    ```powershell
    python -m pip install chonky-py
-   chonky
+   chonky-browser
    ```
 
 A pending publisher does not reserve the package name. The first successful upload creates the project. No API token is needed with Trusted Publishing. Do not create a GitHub release before configuring the publisher. A release is optional for the first upload because the workflow supports manual publication.
@@ -30,7 +30,7 @@ A pending publisher does not reserve the package name. The first successful uplo
 
 ```powershell
 python -m pip install "chonky-py[desktop]"
-chonky-desktop
+chonky
 ```
 
 The desktop command requires Windows and Edge WebView2. The standalone Setup executable remains a separate build documented in [installation.md](installation.md).
