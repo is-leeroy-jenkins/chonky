@@ -56,7 +56,10 @@ import string
 import docx
 from pymupdf import Page, Document
 from sklearn.feature_extraction.text import TfidfVectorizer
-from boogr import Error, Logger
+if __package__:
+	from .boogr import Error, Logger
+else:
+	from boogr import Error, Logger
 from bs4 import BeautifulSoup
 import chromadb
 from chromadb.config import Settings

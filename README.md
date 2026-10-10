@@ -7,6 +7,7 @@
   <a href="#-features">Features</a> ·
   <a href="#-application-tabs">Modes</a> ·
   <a href="#-setup-instructions">Setup</a> ·
+  <a href="resources/installation.md">Installation</a> ·
   <a href="#-document-loading">Loading</a> ·
   <a href="#-text-processing">Processing</a> ·
   <a href="#-semantic-analysis">Analysis</a> ·
@@ -35,6 +36,26 @@ and inspect corpus structure; generate embeddings through hosted providers; pers
 
 sqlite-vec; and run semantic similarity search over stored chunks.
 
+
+## PyPI installation
+
+```powershell
+python -m pip install chonky-py
+chonky-browser
+```
+
+For the Windows tabless desktop window (WebView2 Runtime required):
+
+```powershell
+python -m pip install "chonky-py[desktop]"
+chonky
+```
+
+Python 3.11 or later is required. The distribution is `chonky-py`; the import
+namespace is `chonky`. Do not install it alongside the unrelated PyPI `chonky`
+package in the same environment. Provider credentials and external NLP/model
+resources remain separate. Publication steps are in
+[the PyPI release guide](resources/pypi-release.md).
 
 ## 🎥 Demo
 

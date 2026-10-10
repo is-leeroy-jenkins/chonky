@@ -1,17 +1,37 @@
-[project]
-name = "chonky"
-version = "0.1.0"
-description = "Lightweight text cleaning and document utilities"
-readme = "README.md"
-requires-python = ">=3.10"
-dependencies = []
-
-[tool.setuptools.packages.find]
-where = ["."]
-include = ["chonky*"]
-exclude = ["ipynb*", "github*", "resources*"]
-
 [build-system]
-requires = ["setuptools>=68", "wheel"]
+requires = ["setuptools>=77", "wheel"]
 build-backend = "setuptools.build_meta"
 
+[project]
+name = "chonky-py"
+version = "0.1.0"
+description = "Streamlit application for document loading, NLP, embeddings, and vector search"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{name = "Terry Eppler"}]
+license = "MIT"
+license-files = ["LICENSE.txt"]
+dynamic = ["dependencies"]
+
+[project.urls]
+Homepage = "https://github.com/is-leeroy-jenkins/chonky"
+Documentation = "https://is-leeroy-jenkins.github.io/chonky/"
+Issues = "https://github.com/is-leeroy-jenkins/chonky/issues"
+
+[project.scripts]
+chonky = "chonky.cli:desktop"
+chonky-browser = "chonky.cli:main"
+
+[project.optional-dependencies]
+desktop = ["pywebview>=5.0; sys_platform == 'win32'"]
+
+[tool.setuptools]
+packages = ["chonky"]
+package-dir = {chonky = "."}
+include-package-data = false
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements-runtime.txt"]}
+
+[tool.setuptools.package-data]
+chonky = ["resources/images/**/*.png", "resources/images/**/*.ico", ".streamlit/config.toml"]
