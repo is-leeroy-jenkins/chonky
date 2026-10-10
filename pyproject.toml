@@ -19,8 +19,8 @@ Documentation = "https://is-leeroy-jenkins.github.io/chonky/"
 Issues = "https://github.com/is-leeroy-jenkins/chonky/issues"
 
 [project.scripts]
-chonky = "chonky.cli:main"
-chonky-desktop = "chonky.cli:desktop"
+chonky = "chonky.cli:desktop"
+chonky-browser = "chonky.cli:main"
 
 [project.optional-dependencies]
 desktop = ["pywebview>=5.0; sys_platform == 'win32'"]
