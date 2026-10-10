@@ -56,3 +56,8 @@ Mkfile.old
 dkms.conf
 
 
+
+# Desktop build output
+build/
+dist/
+dist-installer/
