@@ -55,11 +55,17 @@ from openai import OpenAI
 from google import genai
 from google.genai import types
 from google.genai.types import (EmbedContentConfig, HttpOptions)
-import config as cfg
+if __package__:
+	from . import config as cfg
+else:
+	import config as cfg
 from typing import List, Optional, Any, Union, Dict
 import tiktoken
 import os
-from boogr import Error, Logger
+if __package__:
+	from .boogr import Error, Logger
+else:
+	from boogr import Error, Logger
 import requests
 
 def throw_if( name: str, value: object ):
