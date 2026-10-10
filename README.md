@@ -7,6 +7,7 @@
   <a href="#-features">Features</a> ·
   <a href="#-application-tabs">Modes</a> ·
   <a href="#-setup-instructions">Setup</a> ·
+  <a href="resources/installation.md">Installation</a> ·
   <a href="#-document-loading">Loading</a> ·
   <a href="#-text-processing">Processing</a> ·
   <a href="#-semantic-analysis">Analysis</a> ·
