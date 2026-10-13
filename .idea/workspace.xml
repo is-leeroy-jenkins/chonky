@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4caaaf0f-a86b-4586-8159-753de1ab8fff" name="Changes" comment="update">
+      <change afterPath="$PROJECT_DIR$/palantir/meta.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,6 +79,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;python.packages.toolwindow.project.migrated.to.right.top.v2&quot;: &quot;true&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -93,8 +94,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-4abd2a77f808-JavaScript-PY-262.9437.214" />
-        <option value="bundled-python-sdk-821f704e66d9-5bd6d13a2a75-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-262.9437.214" />
+        <option value="bundled-js-predefined-d6986cc7102b-4abd2a77f808-JavaScript-PY-262.10968.92" />
+        <option value="bundled-python-sdk-73a66231627c-5bd6d13a2a75-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-262.10968.92" />
       </set>
     </attachedChunks>
   </component>
@@ -156,15 +157,9 @@
       <workItem from="1788037081132" duration="1525000" />
       <workItem from="1788373498103" duration="804000" />
       <workItem from="1791334129591" duration="196000" />
-      <workItem from="1791498004644" duration="2835000" />
-    </task>
-    <task id="LOCAL-00026" summary="update">
-      <option name="closed" value="true" />
-      <created>1779651409313</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1779651409313</updated>
+      <workItem from="1791498004644" duration="2856000" />
+      <workItem from="1791667287761" duration="1392000" />
+      <workItem from="1791849294104" duration="1831000" />
     </task>
     <task id="LOCAL-00027" summary="update">
       <option name="closed" value="true" />
@@ -550,7 +545,15 @@
       <option name="project" value="LOCAL" />
       <updated>1791501339947</updated>
     </task>
-    <option name="localTasksCounter" value="75" />
+    <task id="LOCAL-00075" summary="update">
+      <option name="closed" value="true" />
+      <created>1791501663026</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1791501663026</updated>
+    </task>
+    <option name="localTasksCounter" value="76" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -1,0 +1,90 @@
+package:
+  name: '{{ PACKAGE_NAME }}'
+  version: '{{ PACKAGE_VERSION }}'
+
+source:
+  path: ../src
+
+requirements:
+  run:
+    # Foundry Jupyter / Python 3.13
+    - python 3.13.*
+    - ipykernel
+    - pip
+    - foundry-transforms-lib-python
+    - pandas>=2.1
+    - streamlit
+
+    # Data / visualization
+    - altair>=5.0
+    # Source: numpy>=1.26
+    - numpy>=2,<3
+    - pillow>=10.0
+    - matplotlib>=3.8
+    - scikit-learn>=1.4
+    - scipy>=1.11
+
+    # Web / text extraction / NLP
+    - lxml>=5.0
+    - nltk>=3.8
+    - textstat>=0.7
+    - beautifulsoup4>=4.12
+    - wikipedia>=1.4
+    - arxiv>=2.1
+    - requests>=2.31
+    - gensim>=4.3
+    - spacy>=3.7
+    - textblob>=0.18
+
+    # Hosted AI / embeddings
+    - openai>=1.0
+    - groq>=0.9
+    - google-genai>=1.0
+    - tiktoken>=0.7
+
+    # Bro-validated version family
+    # Source: sentence-transformers>=2.7
+    - sentence-transformers==5.1.2
+    - transformers>=4.41,<5
+    - huggingface_hub>=0.34,<1
+
+    # LangChain
+    - langchain>=0.3
+    - langchain-core>=0.3
+    - langchain-community>=0.3
+    - langchain-text-splitters>=0.3
+
+    # Unavailable in the configured Foundry Conda repositories.
+    # Original requirement retained for future resolution.
+    # - langchain-google-community>=2.0
+
+    # Vector databases
+    - chromadb>=0.5
+    - pinecone>=5.0
+
+    # Documents / spreadsheets
+    - pymupdf>=1.24
+    - python-docx>=1.1
+    - docx2txt>=0.8
+    - openpyxl>=3.1
+    - xlrd>=2.0
+    - pyxlsb>=1.0
+    - odfpy>=1.4
+    # unstructured>=0.14
+    - pypdf>=4.0
+
+    # Streamlit extensions
+    - streamlit-pdf
+
+    # Unresolved original requirements
+    # - sqlite-vec>=0.1
+    # - rapidocr-onnxruntime>=1.3
+    # - streamlit-extras
+    # - torchvision==0.26.0
+
+    # TorchVision 0.26.0 requires PyTorch 2.11.*
+    # Verify compatible CPU Conda builds before enabling:
+    # - pytorch==2.11.*
+
+    # Excluded Foundry baseline dependency
+    # - python_sdk>=0.1.0
